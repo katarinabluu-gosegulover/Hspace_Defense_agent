@@ -1,11 +1,8 @@
 {
-  "team": "team2",
-  "target": "team1",
-  "mode": "defense",
-  "revision": "team2-attack-rewrite-20260530-1",
-  "notes": [
-    "Replaces the attack placeholder with a typed black-box attack agent.",
-    "Keeps defense agent compatibility and build markers for coordinator runs.",
-    "Adds vuln5 and vuln6 attack slots while default submission stays vuln1~vuln4."
-  ]
+  "attack": {
+    "path": "attack_agent/main.py"
+  },
+  "defense": {
+    "path": "defense_agent/main.py"
+  }
 }

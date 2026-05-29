@@ -97,6 +97,9 @@ def _configured_flag_ids() -> tuple[str, ...]:
     return values or DEFAULT_FLAG_IDS
 
 
+DEFAULT_BUILD_REV = "team2-attack-rewrite-20260530-2"
+
+
 def _load_build_rev() -> str:
     manifest_path = Path(__file__).resolve().parents[1] / "agent_manifest.json"
     try:
@@ -104,9 +107,14 @@ def _load_build_rev() -> str:
         revision = str(data.get("revision", "")).strip()
         if revision:
             return revision
+        attack_entry = data.get("attack")
+        if isinstance(attack_entry, dict):
+            revision = str(attack_entry.get("revision", "")).strip()
+            if revision:
+                return revision
     except Exception:
         pass
-    return "unknown-build-rev"
+    return DEFAULT_BUILD_REV
 
 
 BUILD_REV = _load_build_rev()
