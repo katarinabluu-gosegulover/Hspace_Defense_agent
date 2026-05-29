@@ -2,7 +2,7 @@
   "team": "team2",
   "target": "team1",
   "mode": "defense",
-  "revision": "defense-agent-runner-fix-20260530-defense-push-check",
+  "revision": "defense-agent-build-rev-marker-20260530-1",
   "notes": [
     "Adds minimal agent_sdk.runner so the coordinator can execute the agent image.",
     "Adds gitctf_sdk commit helper for Agent-Run-ID service patches.",

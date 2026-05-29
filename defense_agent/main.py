@@ -58,6 +58,7 @@ LLM_BASE_SOURCE       = "OPENROUTER_BASE_URL" if os.environ.get("OPENROUTER_BASE
 
 REPO_PATH   = Path(os.environ.get("SERVICE_REPO_PATH", "."))
 SERVICE_URL = os.environ.get("SERVICE_URL", "http://knights.hspace.io:42001")
+AGENT_ROOT = Path(__file__).resolve().parents[1]
 
 # 리포트 저장 폴더
 REPORT_DIR = REPO_PATH / "defense_reports"
@@ -75,6 +76,25 @@ MODELS = [
 ]
 
 _llm_call_count = 0
+
+
+def _load_build_rev() -> str:
+    env_rev = os.environ.get("HSPACE_AGENT_BUILD_REV", "").strip()
+    if env_rev:
+        return env_rev
+
+    manifest_path = AGENT_ROOT / "agent_manifest.json"
+    try:
+        data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        revision = str(data.get("revision", "")).strip()
+        if revision:
+            return revision
+    except Exception:
+        pass
+    return "unknown-build-rev"
+
+
+BUILD_REV = _load_build_rev()
 
 
 def log_event(event: str, **fields) -> None:
@@ -1342,7 +1362,7 @@ def save_report(report: str, attacks: list[dict]) -> Path:
         raw_section += "\n```\n"
 
     report_path.write_text(
-        header + stats_section + llm_section + raw_section,
+        header + f"\n\n- Build Rev: `{BUILD_REV}`" + stats_section + llm_section + raw_section,
         encoding="utf-8",
     )
     return report_path
@@ -1353,6 +1373,7 @@ def save_report(report: str, attacks: list[dict]) -> Path:
 # ═════════════════════════════════════════════════════════════════════════════
 
 def main() -> None:
+    print(f"[hspace-defense-agent] build_rev={BUILD_REV}", file=sys.stderr, flush=True)
     print("=" * 64)
     print("  HSPACE LiveFire A&D — Team2 Defense Agent")
     print("  방어 대상: Team1 / Study Compass (귀찮은 업무 도우미)")
@@ -1360,6 +1381,7 @@ def main() -> None:
     print(f"  Repo    : {REPO_PATH.resolve()}")
     print(f"  Service : {SERVICE_URL}")
     print(f"  RunID   : {AGENT_RUN_ID or '(없음)'}")
+    print(f"  Build   : {BUILD_REV}")
     print()
 
     if not BASE_URL:
@@ -1376,6 +1398,7 @@ def main() -> None:
         model=MODELS[0],
         llm_base_source=LLM_BASE_SOURCE,
         log_path=str(AGENT_LOG_PATH),
+        build_rev=BUILD_REV,
     )
 
     # ── Step 1: LLM 패치 검토 (AI agent 요건) ────────────────────────────
@@ -1462,6 +1485,7 @@ def main() -> None:
         monitor_changed=len(monitor_changed),
         healthy=is_healthy,
         attacks=len(attacks),
+        build_rev=BUILD_REV,
     )
     print()
 
