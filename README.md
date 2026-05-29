@@ -4,10 +4,12 @@
 
 이 repo는 서비스 전체를 담는 용도가 아니라, coordinator에 `agent-only` 제출할
 `defense_agent`, `agent_sdk`, `agent_manifest.json`을 관리하는 용도다.
+다만 coordinator hook 호환을 위해 `attack_agent/`는 no-op placeholder로 유지한다.
 
 ## 구성
 
 - `defense_agent/`
+- `attack_agent/` (no-op placeholder)
 - `agent_sdk/`
 - `agent_manifest.json`
 - `scripts/gitctf.py`
