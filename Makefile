@@ -22,6 +22,7 @@ push:
 	$(MAKE) push-attack
 
 push-attack:
+	python scripts/guard_attack_push.py
 	$(GITCTF) push --team team2 --repo-team team2 --message submit-attack-agent $(PUSH_ARGS)
 
 push-defense:
