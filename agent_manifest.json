@@ -1,0 +1,11 @@
+{
+  "team": "team2",
+  "target": "team1",
+  "mode": "defense",
+  "revision": "defense-agent-runner-fix-20260529-2",
+  "notes": [
+    "Adds minimal agent_sdk.runner so the coordinator can execute the agent image.",
+    "Adds gitctf_sdk commit helper for Agent-Run-ID service patches.",
+    "Keeps enhanced attack detection injection in defense_agent/main.py."
+  ]
+}

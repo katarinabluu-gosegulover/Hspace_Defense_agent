@@ -1,0 +1,12 @@
+{
+  "team_id": "team2",
+  "service_description": "Agent-only local repo placeholder for team2.",
+  "service": {
+    "health": {
+      "endpoint": "/health",
+      "method": "GET",
+      "expect_status": 200
+    }
+  },
+  "vulnerabilities": []
+}
