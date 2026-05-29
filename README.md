@@ -1,13 +1,12 @@
 # team2-agent-repo
 
-`team2` 전용 공격/방어 agent 작업 repo.
+`team2` 전용 방어 agent 작업 repo.
 
 이 repo는 서비스 전체를 담는 용도가 아니라, coordinator에 `agent-only` 제출할
-`attack_agent`, `defense_agent`, `agent_sdk`, `agent_manifest.json`을 관리하는 용도다.
+`defense_agent`, `agent_sdk`, `agent_manifest.json`을 관리하는 용도다.
 
 ## 구성
 
-- `attack_agent/`
 - `defense_agent/`
 - `agent_sdk/`
 - `agent_manifest.json`
@@ -31,5 +30,5 @@ make push TARGET_TEAM=team3
 
 ## 참고
 
-- 이 repo의 `make push`는 `--repo-team $(TARGET_TEAM)`를 명시한다.
+- 이 repo의 `make push`는 `--repo-team $(TARGET_TEAM)`와 `--no-commit`를 기본으로 사용한다.
 - 실제 라운드 실행은 coordinator가 담당한다.

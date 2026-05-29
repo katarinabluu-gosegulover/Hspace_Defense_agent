@@ -70,7 +70,9 @@ def _entrypoint() -> str:
     if override:
         return override
     if mode == "attack":
-        return "attack_agent.main:main"
+        if (ROOT / "attack_agent" / "main.py").exists():
+            return "attack_agent.main:main"
+        return "agent_sdk.noop_attack:main"
     return "defense_agent.main:main"
 
 
